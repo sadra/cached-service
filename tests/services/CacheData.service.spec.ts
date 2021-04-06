@@ -32,6 +32,7 @@ describe('Cache Service Data', () => {
       getData: jest.fn().mockResolvedValue(dummyData),
       addData: jest.fn().mockResolvedValue(dummyData),
       deleteData: jest.fn().mockResolvedValue(dummeyDeleteCount),
+      deleteAll: jest.fn().mockResolvedValue(dummeyDeleteCount),
     };
 
     mockNextFunction = jest.fn();
@@ -106,6 +107,18 @@ describe('Cache Service Data', () => {
       );
 
       expect(cacheDataRepository.deleteData).toBeCalledWith('key_1');
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.send).toBeCalledWith(dummeyDeleteCount);
+    });
+
+    it('should call deleteAll, and pass deleted Count', async () => {
+      const res = await deleteCacheData.deleteAll(
+        mockRequest,
+        mockResponse,
+        mockNextFunction,
+      );
+
+      expect(cacheDataRepository.deleteAll).toBeCalledTimes(1);
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.send).toBeCalledWith(dummeyDeleteCount);
     });

@@ -15,6 +15,16 @@ class DeleteCacheData {
       next(e);
     }
   }
+
+  async deleteAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      let data: DeletedDataDto = await this.cacheRepository.deleteAll();
+
+      res.status(200).send(data);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 export default DeleteCacheData;
