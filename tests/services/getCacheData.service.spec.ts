@@ -45,4 +45,42 @@ describe('Get Cache Service Data', () => {
     expect(mockResponse.status).toBeCalledWith(200);
     expect(mockResponse.send).toBeCalledWith(dummeyKeys);
   });
+
+  it('should call getData with key, and pass dummyData as the response', async () => {
+    mockRequest.params = {
+      key: 'key_1',
+    };
+
+    const res = await getCacheDataService.getData(
+      mockRequest,
+      mockResponse,
+      mockNextFunction,
+    );
+
+    expect(cacheDataRepository.getData).toBeCalledWith('key_1');
+    expect(mockResponse.status).toBeCalledWith(200);
+    expect(mockResponse.send).toBeCalledWith(dummyData);
+  });
+
+  it('should call addData if getData returns null, and pass correct data', async () => {
+    mockRequest.params = {
+      key: 'key_1',
+    };
+    cacheDataRepository.getData = jest.fn().mockResolvedValue(null);
+
+    const res = await getCacheDataService.getData(
+      mockRequest,
+      mockResponse,
+      mockNextFunction,
+    );
+
+    expect(cacheDataRepository.getData).toBeCalledWith('key_1');
+    expect(cacheDataRepository.addData).toBeCalledWith(
+      expect.any(String),
+      { msg: 'dummy' },
+      60000,
+    );
+    expect(mockResponse.status).toBeCalledWith(200);
+    expect(mockResponse.send).toBeCalledWith(dummyData);
+  });
 });
