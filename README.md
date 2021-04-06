@@ -74,7 +74,6 @@ Method: `GET`
 Response:
 ```json
 {
-    "ttl": 60000,
     "_id": "606c968569a73d64845a72bf",
     "key": "key_1617729157563",
     "data": { "msg": "dummy" },
@@ -119,7 +118,6 @@ Body:
 Response:
 ```json
 {
-    "ttl": 60000,
     "_id": "606c968569a73d64845a72bf",
     "key": "key_1617729157563",
     "data": { "msg": "dummy" },
@@ -127,3 +125,7 @@ Response:
     "__v": 0,
 }
 ```
+
+## TTL
+
+Each object just alive for 1 minuet (60 seconds).
