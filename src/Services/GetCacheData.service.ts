@@ -1,4 +1,4 @@
-import { ICacheDataRepository } from './../Repository/CacheData.repository.interface';
+import { ICacheDataRepository } from '../Repository/CacheData.repository.interface';
 import { NextFunction, Request, Response } from 'express';
 
 class GetCacheData {
@@ -10,6 +10,7 @@ class GetCacheData {
 
       res.status(200).send(keys);
     } catch (e) {
+      console.log(e);
       next(e);
     }
   }
