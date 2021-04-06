@@ -85,4 +85,38 @@ describe('CacheDate Repository', () => {
       );
     });
   });
+
+  describe('Delete CacheData', () => {
+    beforeEach(async () => {
+      const dummy = [
+        {
+          key: 'key_1',
+          data: { msg: 'dummy' },
+          ttl: 60000,
+        },
+        {
+          key: 'key_2',
+          data: { msg: 'dummy' },
+          ttl: 60000,
+        },
+        {
+          key: 'key_3',
+          data: { msg: 'dummy' },
+          ttl: 60000,
+        },
+      ];
+
+      await CacheData.insertMany(dummy);
+    });
+
+    it('should return deletedCount: 1 if key exist', async () => {
+      const res = await cachedRepository.deleteData('key_2');
+      expect(res).toEqual(expect.objectContaining({ deletedCount: 1 }));
+    });
+
+    it('should return deletedCount: 0 if key does not exist', async () => {
+      const res = await cachedRepository.deleteData('key_x');
+      expect(res).toEqual(expect.objectContaining({ deletedCount: 0 }));
+    });
+  });
 });
