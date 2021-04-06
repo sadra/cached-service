@@ -50,3 +50,58 @@ MONGO_DB_PORT=27017
 ```bash
 npm test
 ```
+
+## API
+
+Base Route: `https://localhost:8000`
+### Get All Keys
+
+Route: `/cache/keys`
+Method: `GET`
+Response:
+```json
+['key_1', 'key_2', 'key_3']
+```
+
+### Get a Data with Key
+
+Route: `/cache/keys/DATA_KEY`
+Method: `GET`
+Response:
+```json
+{
+    ttl: 60000,
+    _id: '606c968569a73d64845a72bf',
+    key: 'key_1617729157563',
+    data: { msg: 'dummy' },
+    date: '2021-04-06T17:12:37.568Z',
+    __v: 0,
+}
+```
+
+### Delete a Data with Key
+
+Route: `/cache/keys/DATA_KEY`
+Method: `DELETE`
+Response:
+```json
+{ deletedCount: 1 }
+```
+
+### Delete a All Cached Data
+
+Route: `/cache/keys`
+Method: `DELETE`
+Response:
+```json
+{ deletedCount: 10 }
+```
+
+### Upsert a Data (Update/Create)
+
+Route: `/cache/keys/DATA_KEY`
+Method: `PUT`
+Response:
+```json
+{ msg: 'dummy' } //The data that you want to be cached
+```
