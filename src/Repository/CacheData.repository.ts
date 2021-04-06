@@ -1,6 +1,7 @@
 import { ICacheDataRepository } from './CacheData.repository.interface';
 import CacheData, { ICacheData } from '../Repository/CacheData.model';
 import { DeletedDataDto } from '../Dto/DeletedData.dto';
+require('dotenv').config();
 
 export default class CacheDataRepository implements ICacheDataRepository {
   async upsertData(
@@ -36,6 +37,7 @@ export default class CacheDataRepository implements ICacheDataRepository {
       ttl,
     });
 
+    await this.checkLimits();
     return await dataModel.save();
   }
 
@@ -46,5 +48,14 @@ export default class CacheDataRepository implements ICacheDataRepository {
   async getAllKeys(): Promise<string[]> {
     const data = await CacheData.find();
     return data.map((d) => d.key);
+  }
+
+  async checkLimits() {
+    const count = await CacheData.count();
+    const limit = +process.env.CACHE_LIMIT!!;
+    if (count >= limit) {
+      const oldest = await CacheData.find({}).sort({ date: -1 });
+      await CacheData.deleteOne({ key: oldest[0].key });
+    }
   }
 }
