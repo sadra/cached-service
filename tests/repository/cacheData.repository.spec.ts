@@ -26,17 +26,14 @@ describe('CacheDate Repository', () => {
         {
           key: 'key_1',
           data: { msg: 'dummy' },
-          ttl: 60000,
         },
         {
           key: 'key_2',
           data: { msg: 'dummy' },
-          ttl: 60000,
         },
         {
           key: 'key_3',
           data: { msg: 'dummy' },
-          ttl: 60000,
         },
       ];
 
@@ -55,7 +52,6 @@ describe('CacheDate Repository', () => {
         expect.objectContaining({
           key: 'key_2',
           data: expect.objectContaining({ msg: 'dummy' }),
-          ttl: 60000,
         }),
       );
     });
@@ -69,18 +65,13 @@ describe('CacheDate Repository', () => {
 
   describe('Add CacheData', () => {
     it('should return data object after Add', async () => {
-      const res = await cachedRepository.addData(
-        'key_00',
-        { msg: 'dummy' },
-        60000,
-      );
+      const res = await cachedRepository.addData('key_00', { msg: 'dummy' });
 
       expect(res).toEqual(
         expect.objectContaining({
           _id: expect.anything(),
           key: 'key_00',
           data: expect.objectContaining({ msg: 'dummy' }),
-          ttl: 60000,
         }),
       );
     });
@@ -92,17 +83,14 @@ describe('CacheDate Repository', () => {
         {
           key: 'key_1',
           data: { msg: 'dummy' },
-          ttl: 60000,
         },
         {
           key: 'key_2',
           data: { msg: 'dummy' },
-          ttl: 60000,
         },
         {
           key: 'key_3',
           data: { msg: 'dummy' },
-          ttl: 60000,
         },
       ];
 
@@ -131,17 +119,14 @@ describe('CacheDate Repository', () => {
         {
           key: 'key_1',
           data: { msg: 'dummy' },
-          ttl: 60000,
         },
         {
           key: 'key_2',
           data: { msg: 'dummy' },
-          ttl: 60000,
         },
         {
           key: 'key_3',
           data: { msg: 'dummy' },
-          ttl: 60000,
         },
       ];
 
@@ -149,21 +134,17 @@ describe('CacheDate Repository', () => {
     });
 
     it('should update data if is exist', async () => {
-      const res = await cachedRepository.upsertData(
-        'key_2',
-        { msg: 'dummy dou' },
-        60000,
-      );
+      const res = await cachedRepository.upsertData('key_2', {
+        msg: 'dummy dou',
+      });
 
       expect(res.data).toEqual(expect.objectContaining({ msg: 'dummy dou' }));
     });
 
     it('should insert data if does not is exist', async () => {
-      const res = await cachedRepository.upsertData(
-        'key_x',
-        { msg: 'dummy dou' },
-        60000,
-      );
+      const res = await cachedRepository.upsertData('key_x', {
+        msg: 'dummy dou',
+      });
 
       expect(res.key).toEqual('key_x');
       expect(res.data).toEqual(expect.objectContaining({ msg: 'dummy dou' }));

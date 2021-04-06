@@ -13,7 +13,6 @@ class UpsertCacheData {
       let dataObj: ICacheData = await this.cacheRepository.upsertData(
         key,
         req.body,
-        60000,
       );
 
       res.status(200).send(dataObj);

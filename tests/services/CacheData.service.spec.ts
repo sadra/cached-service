@@ -16,7 +16,6 @@ describe('Cache Service Data', () => {
   let mockNextFunction = {} as NextFunction;
 
   let dummyData = {
-    ttl: 60000,
     _id: '606c968569a73d64845a72bf',
     key: 'key_1617729157563',
     data: { msg: 'dummy' },
@@ -88,11 +87,9 @@ describe('Cache Service Data', () => {
       );
 
       expect(cacheDataRepository.getData).toBeCalledWith('key_1');
-      expect(cacheDataRepository.addData).toBeCalledWith(
-        expect.any(String),
-        { msg: 'dummy' },
-        60000,
-      );
+      expect(cacheDataRepository.addData).toBeCalledWith(expect.any(String), {
+        msg: 'dummy',
+      });
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.send).toBeCalledWith(dummyData);
     });
@@ -139,11 +136,9 @@ describe('Cache Service Data', () => {
         mockNextFunction,
       );
 
-      expect(cacheDataRepository.upsertData).toBeCalledWith(
-        'key_1',
-        { msg: 'dummy' },
-        60000,
-      );
+      expect(cacheDataRepository.upsertData).toBeCalledWith('key_1', {
+        msg: 'dummy',
+      });
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.send).toBeCalledWith(dummyData);
     });

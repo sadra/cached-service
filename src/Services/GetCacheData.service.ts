@@ -24,11 +24,9 @@ class GetCacheData {
       console.log(data ? 'Cache hit' : 'Cache miss');
 
       if (!data) {
-        data = await this.cacheRepository.addData(
-          this.generateKey(),
-          { msg: 'dummy' },
-          60000,
-        );
+        data = await this.cacheRepository.addData(this.generateKey(), {
+          msg: 'dummy',
+        });
       }
 
       res.status(200).send(data);
