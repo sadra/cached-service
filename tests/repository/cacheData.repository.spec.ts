@@ -66,4 +66,23 @@ describe('CacheDate Repository', () => {
       expect(res).toBeNull();
     });
   });
+
+  describe('Add CacheData', () => {
+    it('should return data object after Add', async () => {
+      const res = await cachedRepository.addData(
+        'key_00',
+        { msg: 'dummy' },
+        60000,
+      );
+
+      expect(res).toEqual(
+        expect.objectContaining({
+          _id: expect.anything(),
+          key: 'key_00',
+          data: expect.objectContaining({ msg: 'dummy' }),
+          ttl: 60000,
+        }),
+      );
+    });
+  });
 });
