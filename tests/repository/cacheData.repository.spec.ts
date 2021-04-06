@@ -124,4 +124,49 @@ describe('CacheDate Repository', () => {
       expect(res).toEqual(expect.objectContaining({ deletedCount: 3 }));
     });
   });
+
+  describe('Upsert CacheData', () => {
+    beforeEach(async () => {
+      const dummy = [
+        {
+          key: 'key_1',
+          data: { msg: 'dummy' },
+          ttl: 60000,
+        },
+        {
+          key: 'key_2',
+          data: { msg: 'dummy' },
+          ttl: 60000,
+        },
+        {
+          key: 'key_3',
+          data: { msg: 'dummy' },
+          ttl: 60000,
+        },
+      ];
+
+      await CacheData.insertMany(dummy);
+    });
+
+    it('should update data if is exist', async () => {
+      const res = await cachedRepository.upsertData(
+        'key_2',
+        { msg: 'dummy dou' },
+        60000,
+      );
+
+      expect(res.data).toEqual(expect.objectContaining({ msg: 'dummy dou' }));
+    });
+
+    it('should insert data if does not is exist', async () => {
+      const res = await cachedRepository.upsertData(
+        'key_x',
+        { msg: 'dummy dou' },
+        60000,
+      );
+
+      expect(res.key).toEqual('key_x');
+      expect(res.data).toEqual(expect.objectContaining({ msg: 'dummy dou' }));
+    });
+  });
 });

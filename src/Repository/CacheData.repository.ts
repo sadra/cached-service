@@ -3,6 +3,22 @@ import CacheData, { ICacheData } from '../Repository/CacheData.model';
 import { DeletedDataDto } from '../Dto/DeletedData.dto';
 
 export default class CacheDataRepository implements ICacheDataRepository {
+  async upsertData(
+    key: string,
+    data: object,
+    ttl: number,
+  ): Promise<ICacheData> {
+    let dataObj = await CacheData.findOne({ key });
+
+    if (!dataObj) {
+      return await this.addData(key, data, ttl);
+    }
+    dataObj.data = data;
+    dataObj.ttl = ttl;
+
+    return await dataObj.save();
+  }
+
   async deleteAll(): Promise<DeletedDataDto> {
     const res = await CacheData.deleteMany({});
     return { deletedCount: res.deletedCount!! | 0 };
