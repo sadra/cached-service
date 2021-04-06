@@ -30,3 +30,20 @@ npm run start:dev
 ```bash
 npm run start
 ```
+
+## Run Test
+
+You should be noticed to run tests you need mongoDb for test repository functions.
+
+1. Just copy `.env.example` to `.env` and fill with your einviorements:
+
+```
+MONGO_TEST_DB_NAME=test_db
+MONGO_DB_PORT=27017
+```
+
+2. To run all the tests:
+
+```bash
+npm test
+```
