@@ -11,7 +11,10 @@ PORT=8000
 MONGO_DB_NAME=cache_db
 MONGO_TEST_DB_NAME=test_db
 MONGO_DB_PORT=27017
+CACHE_LIMIT=10
 ```
+
+The `CACHE_LIMIT` stands for limit of existing cache on mongo.
 
 2. Install npm packages:
 
