@@ -57,7 +57,9 @@ Base Route: `https://localhost:8000`
 ### Get All Keys
 
 Route: `/cache/keys`
+
 Method: `GET`
+
 Response:
 ```json
 ["key_1", "key_2", "key_3"]
@@ -66,7 +68,9 @@ Response:
 ### Get a Data with Key
 
 Route: `/cache/keys/DATA_KEY`
+
 Method: `GET`
+
 Response:
 ```json
 {
@@ -82,7 +86,9 @@ Response:
 ### Delete a Data with Key
 
 Route: `/cache/keys/DATA_KEY`
+
 Method: `DELETE`
+
 Response:
 ```json
 { "deletedCount": 1 }
@@ -91,7 +97,9 @@ Response:
 ### Delete a All Cached Data
 
 Route: `/cache/keys`
+
 Method: `DELETE`
+
 Response:
 ```json
 { "deletedCount": 10 }
@@ -100,7 +108,9 @@ Response:
 ### Upsert a Data (Update/Create)
 
 Route: `/cache/keys/DATA_KEY`
+
 Method: `PUT`
+
 Body:
 ```json
 { "msg": "dummy" } //The data that you want to be cached
