@@ -11,23 +11,21 @@ export default class CacheController {
   ) {}
 
   routes(): Router {
-    this.router.get(
-      `/keys`,
-      (req: Request, res: Response, next: NextFunction) =>
+    this.router
+      .get(`/keys`, (req: Request, res: Response, next: NextFunction) =>
         this.getCacheData.getAllKeys(req, res, next),
-    );
-
-    this.router.get(
-      `/keys/:key`,
-      (req: Request, res: Response, next: NextFunction) =>
+      )
+      .get(`/keys/:key`, (req: Request, res: Response, next: NextFunction) =>
         this.getCacheData.getData(req, res, next),
-    );
+      );
 
-    this.router.delete(
-      `/keys/:key`,
-      (req: Request, res: Response, next: NextFunction) =>
+    this.router
+      .delete(`/keys/`, (req: Request, res: Response, next: NextFunction) =>
+        this.deleteCacheData.deleteAll(req, res, next),
+      )
+      .delete(`/keys/:key`, (req: Request, res: Response, next: NextFunction) =>
         this.deleteCacheData.deleteData(req, res, next),
-    );
+      );
 
     return this.router;
   }
