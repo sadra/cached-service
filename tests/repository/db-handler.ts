@@ -1,4 +1,5 @@
-import mongoose, { ConnectionOptions, connect } from 'mongoose';
+import mongoose from 'mongoose';
+require('dotenv').config();
 
 /**
  * Connect to the in-memory database.
@@ -9,7 +10,10 @@ export const connectDB = async () => {
     useUnifiedTopology: true,
   };
 
-  await mongoose.connect('mongodb://localhost:27017/test', mongooseOpts);
+  await mongoose.connect(
+    `mongodb://localhost:${process.env.MONGO_DB_PORT}/${process.env.MONGO_TEST_DB_NAME}`,
+    mongooseOpts,
+  );
 };
 
 /**

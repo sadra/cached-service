@@ -1,8 +1,9 @@
 import { ConnectionOptions, connect } from 'mongoose';
+require('dotenv').config();
 
 const connectDB = async () => {
   try {
-    const mongoURI: string = 'mongodb://localhost:27017/cache_db';
+    const mongoURI: string = `mongodb://localhost:${process.env.MONGO_DB_PORT}/${process.env.MONGO_DB_NAME}`;
     const options: ConnectionOptions = {
       useNewUrlParser: true,
       useCreateIndex: true,
