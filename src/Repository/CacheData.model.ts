@@ -40,6 +40,7 @@ const cacheDataSchema: Schema = new Schema({
   date: {
     type: Date,
     default: Date.now,
+    index: { expires: '1m' },
   },
 });
 
