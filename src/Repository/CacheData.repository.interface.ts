@@ -6,4 +6,5 @@ export interface ICacheDataRepository {
   getData(key: string): Promise<ICacheData | null>;
   addData(key: string, data: object, ttl: number): Promise<ICacheData>;
   deleteData(key: string): Promise<DeletedDataDto>;
+  deleteAll(): Promise<DeletedDataDto>;
 }

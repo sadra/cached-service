@@ -118,5 +118,10 @@ describe('CacheDate Repository', () => {
       const res = await cachedRepository.deleteData('key_x');
       expect(res).toEqual(expect.objectContaining({ deletedCount: 0 }));
     });
+
+    it('should return deletedCount: 3 for delete all data', async () => {
+      const res = await cachedRepository.deleteAll();
+      expect(res).toEqual(expect.objectContaining({ deletedCount: 3 }));
+    });
   });
 });
