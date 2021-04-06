@@ -6,7 +6,7 @@
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start:dev": "ts-node src/bin/server.ts",
-    "start": "node dist/bin/server.js",
+    "start": "npm run build && node dist/bin/server.js",
     "test": "jest",
     "test:watch": "jest --watch"
   },
