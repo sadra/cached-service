@@ -1,6 +1,7 @@
 import { ICacheDataRepository } from '../../src/Repository/CacheData.repository.interface';
 import GetCacheData from '../../src/Services/GetCacheData.service';
 import DeleteCacheData from '../../src/Services/DeleteCacheData.service';
+import UpsertCacheData from '../../src/Services/UpsertCacheData.service';
 
 import { NextFunction, Request, Response } from 'express';
 
@@ -8,6 +9,7 @@ describe('Cache Service Data', () => {
   let cacheDataRepository: ICacheDataRepository;
   let getCacheDataService: GetCacheData;
   let deleteCacheData: DeleteCacheData;
+  let upsertCacheData: UpsertCacheData;
 
   const mockRequest = {} as Request;
   const mockResponse = {} as Response;
@@ -33,6 +35,7 @@ describe('Cache Service Data', () => {
       addData: jest.fn().mockResolvedValue(dummyData),
       deleteData: jest.fn().mockResolvedValue(dummeyDeleteCount),
       deleteAll: jest.fn().mockResolvedValue(dummeyDeleteCount),
+      upsertData: jest.fn().mockResolvedValue(dummyData),
     };
 
     mockNextFunction = jest.fn();
@@ -41,6 +44,7 @@ describe('Cache Service Data', () => {
 
     getCacheDataService = new GetCacheData(cacheDataRepository);
     deleteCacheData = new DeleteCacheData(cacheDataRepository);
+    upsertCacheData = new UpsertCacheData(cacheDataRepository);
   });
 
   describe('Get Data', () => {
@@ -121,6 +125,27 @@ describe('Cache Service Data', () => {
       expect(cacheDataRepository.deleteAll).toBeCalledTimes(1);
       expect(mockResponse.status).toBeCalledWith(200);
       expect(mockResponse.send).toBeCalledWith(dummeyDeleteCount);
+    });
+  });
+
+  describe('Upsert Data', () => {
+    it('should cacheDataRepository.getAllKeys and pass dummyKeys as the response', async () => {
+      mockRequest.params = { key: 'key_1' };
+      mockRequest.body = { msg: 'dummy' };
+
+      const res = await upsertCacheData.upsert(
+        mockRequest,
+        mockResponse,
+        mockNextFunction,
+      );
+
+      expect(cacheDataRepository.upsertData).toBeCalledWith(
+        'key_1',
+        { msg: 'dummy' },
+        60000,
+      );
+      expect(mockResponse.status).toBeCalledWith(200);
+      expect(mockResponse.send).toBeCalledWith(dummyData);
     });
   });
 });
