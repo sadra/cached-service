@@ -47,5 +47,23 @@ describe('CacheDate Repository', () => {
       const res = await cachedRepository.getAllKeys();
       expect(res).toEqual(expect.arrayContaining(['key_1', 'key_2', 'key_3']));
     });
+
+    it('should return data if key exist', async () => {
+      const res = await cachedRepository.getData('key_2');
+
+      expect(res).toEqual(
+        expect.objectContaining({
+          key: 'key_2',
+          data: expect.objectContaining({ msg: 'dummy' }),
+          ttl: 60000,
+        }),
+      );
+    });
+
+    it('should return null if key does not exist', async () => {
+      const res = await cachedRepository.getData('key_x');
+
+      expect(res).toBeNull();
+    });
   });
 });
