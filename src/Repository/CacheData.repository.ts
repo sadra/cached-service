@@ -4,18 +4,13 @@ import { DeletedDataDto } from '../Dto/DeletedData.dto';
 require('dotenv').config();
 
 export default class CacheDataRepository implements ICacheDataRepository {
-  async upsertData(
-    key: string,
-    data: object,
-    ttl: number,
-  ): Promise<ICacheData> {
+  async upsertData(key: string, data: object): Promise<ICacheData> {
     let dataObj = await CacheData.findOne({ key });
 
     if (!dataObj) {
-      return await this.addData(key, data, ttl);
+      return await this.addData(key, data);
     }
     dataObj.data = data;
-    dataObj.ttl = ttl;
 
     return await dataObj.save();
   }
@@ -30,11 +25,10 @@ export default class CacheDataRepository implements ICacheDataRepository {
     return { deletedCount: res.deletedCount!! | 0 };
   }
 
-  async addData(key: string, data: object, ttl: number): Promise<ICacheData> {
+  async addData(key: string, data: object): Promise<ICacheData> {
     const dataModel = new CacheData({
       key,
       data,
-      ttl,
     });
 
     await this.checkLimits();
